@@ -87,7 +87,9 @@ def train(
         drop_last=True,
     )
     train_loss = losses.DenoisingAutoEncoderLoss(
-        model, decoder_name_or_path=model_name, tie_encoder_decoder=True
+        model,
+        decoder_name_or_path="lassl/roberta-ko-small",
+        tie_encoder_decoder=False,
     )
 
     logger.info(f"Training steps: {num_epochs * steps_per_epoch}")
