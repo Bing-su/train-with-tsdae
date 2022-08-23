@@ -44,6 +44,9 @@ class DenoisingAutoEncoderIterableDataset(IterableDataset):
             sent = data[self.column_name]
             yield InputExample(texts=[self.noise_fn(sent), sent])
 
+    def __len__(self):
+        return self.dataset.info.splits["train"].num_examples
+
     # Deletion noise.
     def delete(self, text: str):
         words = nltk.word_tokenize(text)
