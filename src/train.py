@@ -21,6 +21,7 @@ def train(
     learning_rate: float = 1e-4,
     weight_decay: float = 0.01,
     warmup_steps: int = 1000,
+    scheduler: str = "warmuplinear",
 ):
 
     # Save path to store our model
@@ -107,6 +108,7 @@ def train(
         evaluation_steps=evaluation_steps,
         output_path=model_save_path,
         weight_decay=weight_decay,
+        scheduler=scheduler,
         warmup_steps=warmup_steps,
         optimizer_class=torch.optim.RAdam,
         optimizer_params={"lr": learning_rate},
