@@ -31,6 +31,7 @@ def train(
     )
 
     # Defining our sentence transformer model
+    logger.info("Loading model")
     word_embedding_model = models.Transformer(model_name, max_seq_length=max_seq_length)
     pooling_model = models.Pooling(
         word_embedding_model.get_word_embedding_dimension(), "cls"
@@ -38,7 +39,7 @@ def train(
     model = SentenceTransformer(modules=[word_embedding_model, pooling_model])
 
     # Load train dataset
-
+    logger.info("Loading train dataset")
     dataset = load_dataset(
         "Bingsu/my-korean-training-corpus",
         split="train",
@@ -91,6 +92,7 @@ def train(
     dev_evaluator(model)
 
     # Train the model
+    logger.info("Training start")
     model.fit(
         train_objectives=[(train_dataloader, train_loss)],
         evaluator=dev_evaluator,
@@ -104,6 +106,7 @@ def train(
         optimizer_params={"lr": learning_rate},
         use_amp=True,  # Set to True, if your GPU supports FP16 cores
     )
+    logger.info("Training end")
 
     ##############################################################################
     #
