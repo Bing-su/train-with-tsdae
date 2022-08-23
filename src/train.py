@@ -81,7 +81,9 @@ def train(
     # We train our model using the MultipleNegativesRankingLoss
     train_dataset = DenoisingAutoEncoderIterableDataset(dataset)
     train_dataloader = DataLoader(
-        train_dataset, batch_size=train_batch_size, shuffle=True, drop_last=True
+        train_dataset,
+        batch_size=train_batch_size,
+        drop_last=True,
     )
     train_loss = losses.DenoisingAutoEncoderLoss(
         model, decoder_name_or_path=model_name, tie_encoder_decoder=True
@@ -90,6 +92,10 @@ def train(
     logger.info(f"Training steps: {num_epochs * steps_per_epoch}")
     logger.info("Performance before training")
     dev_evaluator(model)
+
+    # length of IterableDataset
+    len_dataset = 213867576
+    steps_per_epoch = len_dataset // train_batch_size
 
     # Train the model
     logger.info("Training start")
